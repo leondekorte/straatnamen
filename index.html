@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <script src="d3.min.js"></script>
+  <style>
+    body    { padding:0;top:0;right:0;bottom:0;left:0; }
+    svg     { margin: 0 auto; position: relative; width: 700px;}
+    .stop   { stroke: black; stroke-width:2px; fill: white; }
+    h2      { font-family: bree; font-weight:400; padding: 0px;}
+    p       { font-family: bree; font-weight:200; margin-top: 0px}
+    
+       
+  </style>
+</head>
+
+<body>
+  <div id="option">
+    <h2>OV-haltes in Amsterdam (metro en tram)</h2>
+    <p>Hoeveel vrouwelijke en mannelijke haltes zijn er?</p>
+    <input name="updateButton" 
+           type="button" 
+           value="Laat zien" 
+           onclick="updateData()" />
+    </div>
+
+
+  <script type="text/javascript">
+    
+    var width = 100;
+    var height = 700;
+    
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+
+    // set projection
+    var projection = d3.geoMercator()
+                          .scale(160000)
+                          .center([4.941333,52.350156]);            
+
+    // create path variable
+    var path = d3.geoPath()
+        .projection(projection);
+
+    // load and draw metro lines
+    d3.text("data/metro_lines.csv", function(error, data){
+          
+          // parse data with ";" 
+          var dsv = d3.dsvFormat(";");
+          var lines_data = dsv.parseRows(data);          
+          var all_metro_line_points = []
+          
+          
+          for (var i = 0; i < lines_data.length; i++) {
+
+            var metro_line_points = []
+
+            lines_data[i].forEach(function(d) {
+              
+              datapoint1 = (+d.toString().split(',')[0])
+              datapoint2 = (+d.toString().split(',')[1])
+
+              if (isNaN(datapoint1) == 0 && isNaN(datapoint2) == 0) {
+                metro_line_points.push([datapoint1,datapoint2]);  
+              }
+              
+            });
+
+            all_metro_line_points.push(metro_line_points);  
+
+          };
+          
+          // draw the subway lines
+          function drawPath(number) {
+            var routes = svg.insert("path", ".graticule")
+                         .datum({type: "LineString", coordinates: (all_metro_line_points[number])})
+                         .attr("fill", "none")
+                         .attr("stroke","#9ececa")
+                         .attr("stroke-width","4px")
+                         .attr("class", "route") 
+                         .attr("d", path);
+            }       
+          for (var i = 0; i < all_metro_line_points.length; i++) {
+            drawPath(i);
+          }
+    });
+    
+    // setup variable for 
+    var data_2 = [];
+
+    // load and draw metro points
+    d3.csv("data/metro_haltes_wiki.csv", function(data) {
+        
+        // parameters for grid
+        x_count = 0;
+        y_count = -10;
+        
+        // loop through data, return numbers and push data to data_2
+        data.forEach(function(d) {
+          
+          d.LNG = +d.LNG;
+          d.LAT = +d.LAT;  
+          d.Name = d.Name;
+          
+          if (y_count == 300) {
+            y_count = 0;
+            x_count += 10;
+
+          } else {
+            y_count += 10;
+          }
+          data_2.push([[20 + x_count],[20 + y_count],[d.Name]]);
+
+        });
+        
+        // projection for stops
+        var stops = d3.geoPath()
+            .projection(projection);
+
+        // draw stops
+        svg.selectAll("stops")
+          .data(data)
+          .enter()
+          .append("circle")
+          .attr("cy", function(d) { return projection([d.LNG,d.LAT])[1]; } )
+          .attr("cx", function(d) { return projection([d.LNG,d.LAT])[0]; })
+          .attr("r", function(d) { return 3; })
+          .attr("class", "stop")
+          .on('mouseover', function(d){
+              console.log(d.Name)
+              var nodeSelection = d3.select(this).style("fill", "red").style("cursor", "pointer").attr("r",6).attr("text", "")})
+          .on('mouseleave', function(d){
+              var nodeSelection = d3.select(this).style("fill", "white").attr("r",3)});
+
+
+    });
+
+    function showStop() {
+      console.log("test");
+    }
+
+    function updateData() {
+      
+      var t = d3.transition()
+        .duration(3000)
+        .ease(d3.easeExp)
+
+      d3.selectAll('path')
+        .transition()
+        .duration(1000)
+        .style("opacity", "0");
+
+      var y_count = 0;
+      var x_count = 0;
+      var margin = 20;
+      
+      d3.selectAll('circle')
+        .data(data_2)
+        .transition(t)
+        .attr("cy", function(d) { return d[0]})
+        .attr("cx", function(d) { return d[1]});
+        // .on('mouseover', function(d){
+              // console.log(d[2])
+              // var nodeSelection = d3.select(this).style("fill", "red").style("cursor", "pointer").attr("r",6)});
+
+
+      console.log(data_2); 
+
+      
+    }
+
+    
+  </script>
+</body>
