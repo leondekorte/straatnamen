@@ -1,98 +1,180 @@
 <!DOCTYPE html>
+
 <head>
+  
   <meta charset="utf-8">
   <script src="d3.min.js"></script>
+  
   <style>
-    body    { padding:0;top:0;right:0;bottom:0;left:0; }
-    svg     { margin: 0 auto; position: relative; width: 700px;}
-    .stop   { stroke: black; stroke-width:2px; fill: white; }
-    h2      { font-family: bree; font-weight:400; padding: 0px;}
-    p       { font-family: bree; font-weight:200; margin-top: 0px}
     
-       
+    body {
+      padding:0;
+      top:0;
+      right:0;
+      bottom:0;
+      left:0; 
+    }
+    #container {
+      width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    svg { 
+      margin: 0 auto; 
+      position: relative; 
+      width: 700px;
+    }
+    .stop { 
+      stroke: black; 
+      stroke-width:2px; 
+      fill: white; 
+    }
+    h2 { 
+      font-family: bree; 
+      font-weight:400; 
+      padding: 0px;
+    }
+    p { 
+      font-family: bree; 
+      font-weight:200; 
+      margin-top: 0px
+    }
+    .tooltip{ fill: #fff; font-family: helvetica; font-size: 12px;font-weight:800; padding: 0px;  }
+    .dotlabel{ fill: black; font-family: helvetica; font-size: 14px;font-weight:800; padding: 0px; opacity: 0; }
+    rect {  fill:black;  stroke:none;}
+    .button {   
+              margin-top: 10px;
+              background-color: #df5b57; 
+              border: none;
+              color: white;
+              padding: 8px 15px;
+              text-align: center;
+              text-decoration: none;
+              font-weight: 600;
+              display: inline-block;
+              font-size: 16px;
+              cursor: pointer;
+    }
+    .button {
+              -webkit-transition-duration: 0.3s; /* Safari */
+              transition-duration: 0.3s;
+    }
+
+    .button:hover {
+      background-color: black; /* Green */
+      color: white;
+    }    
+
+    #back_button{
+      opacity: 0;
+    }
   </style>
+    
 </head>
 
 <body>
-  <div id="option">
+  <div id="container">
+    
     <h2>OV-haltes in Amsterdam (metro en tram)</h2>
     <p>Hoeveel vrouwelijke en mannelijke haltes zijn er?</p>
-    <input name="updateButton" 
-           type="button" 
-           value="Laat zien" 
-           onclick="updateData()" />
+    
+    <div id="option">
+   
+      <input  name="updateButton" 
+              class="button"
+              type="button" 
+              value="Laat zien" 
+              onclick="updateData(data_2,0)" />
+
+      <input  name="updateButton2" 
+              class="button"
+              id="back_button"
+              type="button" 
+              value="Terug" 
+              onclick="updateData(data_1,1)" />
     </div>
 
+  </div>
 
   <script type="text/javascript">
     
     var width = 100;
     var height = 700;
     
-    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+    var svg = d3.select("#container")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("style", "margin:0 auto;");
 
     // set projection
     var projection = d3.geoMercator()
-                          .scale(160000)
-                          .center([4.941333,52.350156]);            
+                          .scale(140000)
+                          .center([4.962333,52.335156]);            
 
     // create path variable
     var path = d3.geoPath()
         .projection(projection);
 
-    // load and draw metro lines
+    // create variables for updated data
+    var data_1 = []
+    var data_2 = []
+ 
+    // load metro lines
     d3.text("data/metro_lines.csv", function(error, data){
           
-          // parse data with ";" 
-          var dsv = d3.dsvFormat(";");
-          var lines_data = dsv.parseRows(data);          
-          var all_metro_line_points = []
-          
-          
-          for (var i = 0; i < lines_data.length; i++) {
+      // parse data with ";" 
+      var dsv = d3.dsvFormat(";");
+      var lines_data = dsv.parseRows(data);          
+      var all_metro_line_points = [];
+      
+      // loop through every line and push points to "all_metro_line_points". 
+      for (var i = 0; i < lines_data.length; i++) {
 
-            var metro_line_points = []
+        var metro_line_points = []
 
-            lines_data[i].forEach(function(d) {
+        lines_data[i].forEach(function(d) {
               
-              datapoint1 = (+d.toString().split(',')[0])
-              datapoint2 = (+d.toString().split(',')[1])
+          datapoint1 = (+d.toString().split(',')[0])
+          datapoint2 = (+d.toString().split(',')[1])
 
-              if (isNaN(datapoint1) == 0 && isNaN(datapoint2) == 0) {
-                metro_line_points.push([datapoint1,datapoint2]);  
-              }
+          if (isNaN(datapoint1) == 0 && isNaN(datapoint2) == 0) {
+            metro_line_points.push([datapoint1,datapoint2]);  
+          }
               
-            });
+        });
+        all_metro_line_points.push(metro_line_points);  
+      };      
 
-            all_metro_line_points.push(metro_line_points);  
-
-          };
-          
-          // draw the subway lines
-          function drawPath(number) {
-            var routes = svg.insert("path", ".graticule")
+      // draw the subway lines
+      function drawPath(number) {
+        var routes = svg.insert("path", ".graticule")
                          .datum({type: "LineString", coordinates: (all_metro_line_points[number])})
                          .attr("fill", "none")
                          .attr("stroke","#9ececa")
                          .attr("stroke-width","4px")
                          .attr("class", "route") 
                          .attr("d", path);
-            }       
-          for (var i = 0; i < all_metro_line_points.length; i++) {
-            drawPath(i);
-          }
+      }       
+      for (var i = 0; i < all_metro_line_points.length; i++) {
+        drawPath(i);
+      }
     });
-    
-    // setup variable for 
-    var data_2 = [];
-
+        
     // load and draw metro points
-    d3.csv("data/metro_haltes_wiki.csv", function(data) {
-        
+    d3.csv("data/tram_en_metro_haltes.csv", function(data) {
+  
+        // projection for stops
+        var stops = d3.geoPath()
+            .projection(projection);
+
         // parameters for grid
-        x_count = 0;
-        y_count = -10;
+        x_count = 30;
+        y_count = -20;
         
+        total_count = 0;
+
         // loop through data, return numbers and push data to data_2
         data.forEach(function(d) {
           
@@ -100,73 +182,167 @@
           d.LAT = +d.LAT;  
           d.Name = d.Name;
           
-          if (y_count == 300) {
-            y_count = 0;
-            x_count += 10;
+          total_count += 1;
+                 
+          if (total_count == 6 || total_count == 98) {
+            y_count = -10 ;
+            x_count += 60 ;
+          }
+
+          else if (y_count == 300) {
+            y_count = -10 ;
+            x_count += 10 ;
 
           } else {
             y_count += 10;
           }
+          
+          data_1.push([[projection([d.LNG,d.LAT])[1]],[projection([d.LNG,d.LAT])[0]],[d.Name]]);
           data_2.push([[20 + x_count],[20 + y_count],[d.Name]]);
 
         });
-        
-        // projection for stops
-        var stops = d3.geoPath()
-            .projection(projection);
+        console.log("data_2 = ",data_2);
+        console.log("data_1 = ",data_1);
+
 
         // draw stops
         svg.selectAll("stops")
           .data(data)
           .enter()
           .append("circle")
+
           .attr("cy", function(d) { return projection([d.LNG,d.LAT])[1]; } )
           .attr("cx", function(d) { return projection([d.LNG,d.LAT])[0]; })
           .attr("r", function(d) { return 3; })
-          .attr("class", "stop")
+          .attr("class", "stop")       
           .on('mouseover', function(d){
-              console.log(d.Name)
-              var nodeSelection = d3.select(this).style("fill", "red").style("cursor", "pointer").attr("r",6).attr("text", "")})
-          .on('mouseleave', function(d){
-              var nodeSelection = d3.select(this).style("fill", "white").attr("r",3)});
 
+              var nodeSelection = d3.select(this).transition().style("fill", "red").style("cursor", "pointer").attr("r",7);
+
+              tooltip       .append('rect').attr('width', 10 + (6.5 * d.Name.length) )
+                            .attr('height', 24)
+                            .attr("x", 10 + projection([d.LNG,d.LAT])[0] )
+                            .attr("y", -10 + projection([d.LNG,d.LAT])[1] )
+                            .style('fill', 'black')
+                            .attr('stroke', 'black')
+                            .style("opacity", 0)
+                            .transition(2000)
+                            .style("opacity", 1);
+
+              tooltip       .append("text").text(d.Name)
+                            .attr("class","tooltip")
+                            .attr("x", 18 + projection([d.LNG,d.LAT])[0] )
+                            .attr("y", 6 + projection([d.LNG,d.LAT])[1] )
+                            .style("opacity", 0)
+                            .transition(2000)
+                            .style("opacity", 1);
+
+          })
+          .on('mouseleave', function(d){
+              var nodeSelection = d3.select(this).transition().style("fill", "white").attr("r",3)
+              tooltip .selectAll('text').remove();
+              tooltip .selectAll('rect').remove();
+
+            });
+
+        var tooltip = svg.append("g");
+        
+        // Define the g for the tooltip
+        var tooltip_text = tooltip.append("text") 
+          .attr("class", "tooltip");
 
     });
 
-    function showStop() {
-      console.log("test");
-    }
+    svg.append("text").attr("class","dotlabel")
+                        .text("Vrouwelijk (5)").attr("x", 5).attr("y", 30);
 
-    function updateData() {
+    svg.append("text").attr("class","dotlabel")
+                        .text("Mannelijk (92)").attr("x", 5).attr("y", 90);
+
+    svg.append("text").attr("class","dotlabel")
+                        .text("Niet vernoemd").attr("x", 5).attr("y", 170);
+ 
+    function updateData(newdata, opacity) {
       
       var t = d3.transition()
         .duration(3000)
-        .ease(d3.easeExp)
+        .ease(d3.easeExp);
 
       d3.selectAll('path')
         .transition()
         .duration(1000)
-        .style("opacity", "0");
+        .style("opacity", function (argument) {
+            return opacity;
+        });
+
+
+            
+      
+                        
+     
+     d3.selectAll('.dotlabel')
+        .transition()
+        .duration(2000)
+        .style("opacity", function (argument) {
+            if (opacity == 1){
+              return 0;  
+            } else{
+              return 1;
+            }
+            
+        });
+
+
+      d3.select("#back_button")
+        .transition()
+        .style("opacity", function (argument) {
+            if (opacity == 1) {
+              return 0
+            } else {
+              return 1
+            }   
+      });
 
       var y_count = 0;
       var x_count = 0;
       var margin = 20;
-      
+  
+        var tooltip = svg.append("g");
+        
+        // Define the g for the tooltip
+        var tooltip_text = tooltip.append("text") 
+          .attr("class", "tooltip");
+
+
+
       d3.selectAll('circle')
-        .data(data_2)
-        .transition(t)
-        .attr("cy", function(d) { return d[0]})
-        .attr("cx", function(d) { return d[1]});
-        // .on('mouseover', function(d){
-              // console.log(d[2])
-              // var nodeSelection = d3.select(this).style("fill", "red").style("cursor", "pointer").attr("r",6)});
 
+        .data(newdata)       
+        // .enter()
+        .on("mouseover", null)
+        .on("mouseleave", null)
+        .transition(t)    
+        .attr("cy", function(d) { return d[0];})
+        .attr("cx", function(d) { return d[1];})
+        .on("end", function(d) { d3.select(this)
+          .on("mouseover", function (d) {
+            
+            var nodeSelection = d3.select(this).transition().style("fill", "red").style("cursor", "pointer").attr("r",7);
+            console.log(d[2])
 
-      console.log(data_2); 
+          })
+          .on("mouseleave", function (d) {
+            var nodeSelection = d3.select(this).transition().style("fill", "white").style("cursor", "pointer").attr("r",3);
+          })}
+        );     
+
 
       
     }
 
-    
+   
+  
   </script>
+
 </body>
+</html>
