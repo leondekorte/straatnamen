@@ -2,7 +2,8 @@
 
 <head>
   
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="d3.min.js"></script>
   
   <style>
@@ -15,20 +16,15 @@
       left:0; 
     }
     #container {
-      width: 800px;
+      max-width: 450px;
+      width: 100%;
       margin: 0 auto;
       position: relative;
     }
 
-    svg { 
-      margin: 0 auto; 
-      position: relative; 
-      width: 700px;
-    }
     .stop { 
-      stroke: black; 
+      stroke: #3f3966; 
       stroke-width:2px; 
-      fill: white; 
     }
     h2 { 
       font-family: bree; 
@@ -40,9 +36,29 @@
       font-weight:200; 
       margin-top: 0px
     }
-    .tooltip{ fill: #fff; font-family: helvetica; font-size: 12px;font-weight:800; padding: 0px;  }
-    .dotlabel{ fill: black; font-family: helvetica; font-size: 14px;font-weight:800; padding: 0px; opacity: 0; }
-    rect {  fill:black;  stroke:none;}
+    .tooltip { 
+      
+      fill: white; 
+      font-family: helvetica; 
+      font-size: 14px;
+      font-weight:800;  
+
+    }
+    
+    .dotlabel { 
+      fill: black; 
+      font-family: helvetica; 
+      font-size: 16px;
+      font-weight:800; 
+      padding: 0px; 
+      opacity: 0; 
+    }
+    
+    rect {  
+      fill:black;  
+      stroke:none;
+    }
+
     .button {   
               margin-top: 10px;
               background-color: #df5b57; 
@@ -53,7 +69,7 @@
               text-decoration: none;
               font-weight: 600;
               display: inline-block;
-              font-size: 16px;
+              font-size: 18px;
               cursor: pointer;
     }
     .button {
@@ -69,16 +85,15 @@
     #back_button{
       opacity: 0;
     }
+
   </style>
     
 </head>
 
 <body>
+  
   <div id="container">
-    
-    <h2>OV-haltes in Amsterdam (metro en tram)</h2>
-    <p>Hoeveel vrouwelijke en mannelijke haltes zijn er?</p>
-    
+        
     <div id="option">
    
       <input  name="updateButton" 
@@ -99,19 +114,18 @@
 
   <script type="text/javascript">
     
-    var width = 100;
-    var height = 700;
-    
     var svg = d3.select("#container")
                 .append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("style", "margin:0 auto;");
+                .attr("width", "100%")
+                .attr("height", "450px")
+                .attr("style", "margin:0 auto;")
+                .attr("viewBox", "0 0 450 450")
+                .attr("preserveAspectRatio", "xMinYMin");
 
-    // set projection
+    // set projection for map
     var projection = d3.geoMercator()
-                          .scale(140000)
-                          .center([4.962333,52.335156]);            
+                          .scale(105000)
+                          .center([5.03,52.335156]);            
 
     // create path variable
     var path = d3.geoPath()
@@ -170,9 +184,8 @@
             .projection(projection);
 
         // parameters for grid
-        x_count = 30;
-        y_count = -20;
-        
+        x_count = 50;
+        y_count = -25;
         total_count = 0;
 
         // loop through data, return numbers and push data to data_2
@@ -183,28 +196,28 @@
           d.Name = d.Name;
           
           total_count += 1;
-                 
+          margin_between_dots = 15;
+
+          // first male is number 6 and first non-human is number 98
           if (total_count == 6 || total_count == 98) {
             y_count = -10 ;
             x_count += 60 ;
           }
 
-          else if (y_count == 300) {
+          // break to next line = 200
+          else if (y_count >= 400) {
             y_count = -10 ;
-            x_count += 10 ;
+            x_count += margin_between_dots ;
 
           } else {
-            y_count += 10;
+            y_count += margin_between_dots;
           }
           
           data_1.push([[projection([d.LNG,d.LAT])[1]],[projection([d.LNG,d.LAT])[0]],[d.Name]]);
           data_2.push([[20 + x_count],[20 + y_count],[d.Name]]);
 
         });
-        console.log("data_2 = ",data_2);
-        console.log("data_1 = ",data_1);
-
-
+        
         // draw stops
         svg.selectAll("stops")
           .data(data)
@@ -213,33 +226,73 @@
 
           .attr("cy", function(d) { return projection([d.LNG,d.LAT])[1]; } )
           .attr("cx", function(d) { return projection([d.LNG,d.LAT])[0]; })
+          .style("fill", function(d) { return('#867abd'); })
           .attr("r", function(d) { return 3; })
           .attr("class", "stop")       
           .on('mouseover', function(d){
 
-              var nodeSelection = d3.select(this).transition().style("fill", "red").style("cursor", "pointer").attr("r",7);
+              // highlight stop and make bigger
+              var nodeSelection = d3.select(this).transition().style("fill", "white").style("cursor", "pointer").attr("r",7);
+              
+              var data = d;
 
-              tooltip       .append('rect').attr('width', 10 + (6.5 * d.Name.length) )
-                            .attr('height', 24)
-                            .attr("x", 10 + projection([d.LNG,d.LAT])[0] )
-                            .attr("y", -10 + projection([d.LNG,d.LAT])[1] )
-                            .style('fill', 'black')
-                            .attr('stroke', 'black')
-                            .style("opacity", 0)
-                            .transition(2000)
-                            .style("opacity", 1);
+              // draw in this order
+              var layer1 = tooltip.append('g')  
+              var layer2 = tooltip.append('g')
 
-              tooltip       .append("text").text(d.Name)
+              var text = layer2.append("text").text(d.Name)
                             .attr("class","tooltip")
-                            .attr("x", 18 + projection([d.LNG,d.LAT])[0] )
-                            .attr("y", 6 + projection([d.LNG,d.LAT])[1] )
+                            .attr("fill", "white")
+                            .attr("x", function (data) {                       
+                              // Adjust text margin
+                              x = projection([d.LNG,d.LAT])[0]
+
+                              if (x > 200) {
+                                  return ((x)+15)
+                              } else {
+                                  return ((x)+15)  
+                              }                             
+                            })
+                            .attr("y", function (data){
+
+                              // Adjust text margin
+                              y = projection([d.LNG,d.LAT])[1]
+
+                              if (y > 200) {
+                                  return ((y)-10)
+                              } else {
+                                  return ((y)+18)  
+                              }                   
+                            })
+                            .attr("text-anchor", function (data) {
+                              
+                               x = projection([d.LNG,d.LAT])[0]
+                              // Switch anchors
+                              if (x > 300) {
+                                  return ("end")
+                              } else {
+                                  return ("left")  
+                              }                             
+                            })
                             .style("opacity", 0)
                             .transition(2000)
-                            .style("opacity", 1);
+                            .style("opacity", 1);      
 
+                // get namewidth for width labelrectangle
+                var bbox = text.node().getBBox();
+
+               // set labelrectangle
+                var rect = layer1.append("rect")
+                  .attr("x", bbox.x)
+                  .attr("y", bbox.y)
+                  .attr("width", bbox.width)
+                  .attr("height", bbox.height)
+                  .style("fill", "black")               
+                  .style("stroke", "black")
+                  .style("stroke-width", "4");
           })
           .on('mouseleave', function(d){
-              var nodeSelection = d3.select(this).transition().style("fill", "white").attr("r",3)
+              var nodeSelection = d3.select(this).transition().style("fill", "#867abd").attr("r",3)
               tooltip .selectAll('text').remove();
               tooltip .selectAll('rect').remove();
 
@@ -254,13 +307,13 @@
     });
 
     svg.append("text").attr("class","dotlabel")
-                        .text("Vrouwelijk (5)").attr("x", 5).attr("y", 30);
+                        .text("Vernoemd naar een vrouw (5)").attr("x", 5).attr("y", 48);
 
     svg.append("text").attr("class","dotlabel")
-                        .text("Mannelijk (92)").attr("x", 5).attr("y", 90);
+                        .text("Vernoemd naar een man (92)").attr("x", 5).attr("y", 110);
 
     svg.append("text").attr("class","dotlabel")
-                        .text("Niet vernoemd").attr("x", 5).attr("y", 170);
+                        .text("Niet vernoemd naar een persoon (108)").attr("x", 5).attr("y", 214);
  
     function updateData(newdata, opacity) {
       
@@ -273,12 +326,7 @@
         .duration(1000)
         .style("opacity", function (argument) {
             return opacity;
-        });
-
-
-            
-      
-                        
+        });                        
      
      d3.selectAll('.dotlabel')
         .transition()
@@ -291,7 +339,6 @@
             }
             
         });
-
 
       d3.select("#back_button")
         .transition()
@@ -313,8 +360,6 @@
         var tooltip_text = tooltip.append("text") 
           .attr("class", "tooltip");
 
-
-
       d3.selectAll('circle')
 
         .data(newdata)       
@@ -327,20 +372,64 @@
         .on("end", function(d) { d3.select(this)
           .on("mouseover", function (d) {
             
-            var nodeSelection = d3.select(this).transition().style("fill", "red").style("cursor", "pointer").attr("r",7);
-            console.log(d[2])
+            // highlight stop and make bigger
+            var nodeSelection = d3.select(this).transition().style("fill", "white").style("cursor", "pointer").attr("r",7);
 
+            var data_test = d;
+
+            var layer1 = tooltip.append('g')  // draw in this order
+            var layer2 = tooltip.append('g')
+
+            var text = layer2.append("text").text(d[2][0])
+                            .attr("class","tooltip")
+                            .attr("fill", "white")
+                            .attr("x", function (data_test) {                 
+                                  return ((d[1][0]) +15)  
+                            })
+                            .attr("y", function (data_test) {                       
+                              // Adjust text margin
+                              if (d[1][0] > 200) {
+                                  return ((d[0][0])+20)
+                              } else {
+                                  return ((d[0][0]) +6)  
+                              }                             
+                            })
+                            .attr("text-anchor", function (data_test) {
+                              // Switch anchors
+                              if (d[1][0] > 300) {
+                                  return ("end")
+                              } else {
+                                  return ("left")  
+                              }                             
+                            })
+                            .style("opacity", 0)
+                            .transition(2000)
+                            .style("opacity", 1);
+
+              // get namewidth for width labelrectangle
+              var bbox = text.node().getBBox();
+
+              // set labelrectangle
+              var rect = layer1.append("rect")
+                  .attr("x", bbox.x)
+                  .attr("y", bbox.y)
+                  .attr("width", bbox.width)
+                  .attr("height", bbox.height)
+                  .style("fill", "black")               
+                  .style("stroke", "black")
+                  .style("stroke-width", "4");
           })
           .on("mouseleave", function (d) {
-            var nodeSelection = d3.select(this).transition().style("fill", "white").style("cursor", "pointer").attr("r",3);
-          })}
+            var nodeSelection = d3.select(this).transition().style("fill", "#867abd").style("cursor", "pointer").attr("r",3);
+
+              tooltip.selectAll('text').remove();
+              tooltip.selectAll('rect').remove();
+          })
+        }
         );     
-
-
       
     }
-
-   
+ 
   
   </script>
 

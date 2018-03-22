@@ -12,7 +12,7 @@ LNG,LAT,Name,Sex,Person
 4.86056,52.371378,Adm. de Ruijterweg/Jan Evertsenstraat,M,Admiraal Michiel Adriaenszoon de Ruyter
 4.844189,52.369411,Adm. Helfrichstraat,M,Conrad Emile Lambert Helfrich
 4.889594,52.354852,Albert Cuypstraat,M,Albert Cuyp
-4.918613,52.363328,Alexanderplein,M,Alexander van Oranje-Nassau 
+4.918613,52.363328,Alexanderplein,M,Alexander van Oranje-Nassau
 4.904251,52.349035,J. Israëlskade,M,Jozef Israëls
 4.879053,52.351067,Apollolaan,M,Griekse God Apollo
 4.794798,52.350964,Baden Powellweg,M,Robert Baden-Powell
@@ -28,9 +28,9 @@ LNG,LAT,Name,Sex,Person
 4.891588,52.350867,Cornelis Troostplein,M,Cornelis Troost
 4.929434,52.361,Dapperstraat,M,Olfert Dapper
 4.86883,52.33426,de Boelelaan Vu,M,Gerrit de Boele
-4.870429,52.370569,de Clercqstraat,M,Willem de Clercq
+4.870429,52.370569,De Clercqstraat,M,Willem de Clercq
 4.85776,52.377298,De Rijpstraat,M,Jan Corneliszoon Rijp
-4.838056,52.379444,De Vlugtlaan (metrostation),M,Willem de Vlugt
+4.838056,52.379444,De Vlugtlaan,M,Willem de Vlugt
 4.877123,52.383149,De Wittenkade,M,Cornelis en Johan de Wit
 4.839977,52.357934,Derkinderenstraat,M,Antonius Johannes (Antoon) Derkinderen
 4.80655,52.376911,Dr. H. Colijnstraat,M,Hendrikus Colijn
@@ -41,7 +41,7 @@ LNG,LAT,Name,Sex,Person
 4.898816,52.359466,Frederiksplein,M,Frederik der Nederlanden (1797-1881)
 4.877298,52.349021,Gerrit v.d. Veenstraat,M,Gerrit van der Veen
 4.861733,52.336716,Gustav Mahlerlaan,M,Gustav Mahler
-4.834444,52.346389,Henk Sneevlietweg (metrostation),M,Henk Sneevliet
+4.834444,52.346389,Henk Sneevlietweg,M,Henk Sneevliet
 4.883489,52.35994,Hobbemastraat,M,Meindert Hobbema
 4.873157,52.375084,Hugo de Grootplein,M,Hugo de Groot
 4.935574,52.350594,Hugo de Vrieslaan,M,Hugo de Vries
@@ -79,8 +79,8 @@ LNG,LAT,Name,Sex,Person
 4.882011,52.352543,Roelof Hartplein,M,Roelof Hart
 4.885794,52.354479,Ruisdaelstraat,M,Jacob Isaac Ruysdael
 4.886798,52.352216,Ruysdaelkade,M,Jacob Isaac Ruysdael
-4.8325,52.282222,Sacharovlaan (sneltramhalte),M,Andrej Sacharov
-4.920833,52.34,Spaklerweg (metrostation),M,Hendrik van der Masch Spakler
+4.8325,52.282222,Sacharovlaan,M,Andrej Sacharov
+4.920833,52.34,Spaklerweg,M,Hendrik van der Masch Spakler
 4.838129,52.378785,Station de Vlugtlaan,M,Burgemeester De Vlugtlaan
 4.834602,52.357866,Station Lelylaan,M,Cornelis Lely
 4.867589,52.36595,Ten Katestraat,M,Jan Jakob Lodewijk ten Kate
@@ -92,27 +92,27 @@ LNG,LAT,Name,Sex,Person
 4.859082,52.368838,van Kinsbergenstraat,M,Jan Hendrik van Kinsbergen
 4.875103,52.384341,van Limburg Stirumstraat,M,Leopald graaf van Limburg Stirum
 4.900582,52.354536,van Woustraat,M,Geert van Wou
-4.967222,52.328333,Verrijn Stuartweg (metrostation),M,Coenraad Alexander Verrijn Stuart
+4.967222,52.328333,Verrijn Stuartweg,M,Coenraad Alexander Verrijn Stuart
 4.909632,52.357303,Wibautstraat,M,Florentius Marinus Wibaut
 4.863876,52.370565,Willem de Zwijgerlaan,M,Willem van Oranje
 4.85901,52.36478,Witte de Withstraat,M,Witte Corneliszoon de With
 4.904593,52.355844,Amsteldijk,N,
 4.919227,52.346983,Amstelstation,N,
-4.869722,52.299722,Amstelveen Centrum (sneltramhalte),N,
+4.869722,52.299722,Amstelveen Centrum,N,
 4.85716,52.351666,Amstelveenseweg,N,
 4.937386,52.376729,Azartplein,N,
 4.916914,52.358841,Beukenweg,N,
 4.86644,52.30145,Binnenhof,N,
 4.876518,52.374324,Bloemgracht,N,
 4.845483,52.377814,Bos en Lommerplein,N,
-4.851111,52.280556,Brink (sneltramhalte),N,
+4.851111,52.280556,Brink,N,
 4.948319,52.342603,Brinkstraat,N,
-4.952222,52.306667,Bullewijk (metrostation),N,
+4.952222,52.306667,Bullewijk,N,
 4.901592,52.354462,Ceintuurbaan,N,
 4.901403,52.377751,Centraal Station,N,
 4.853339,52.361556,Corantijnstraat,N,
 4.893932,52.373665,Dam,N,
-4.890556,52.353611,De Pijp (metrostation),N,
+4.890556,52.353611,De Pijp,N,
 4.841706,52.351501,Delflandlaan,N,
 4.995301,52.355207,Diemerparklaan,N,
 4.786343,52.35535,Dijkgraafplein,N,
@@ -121,10 +121,10 @@ LNG,LAT,Name,Sex,Person
 4.87731,52.368627,Elandsgracht,N,
 4.89164,52.341539,Europaplein,N,
 4.951565,52.365138,Flevopark,N,
-4.984444,52.311111,Gaasperplas (metrostation),N,
-4.973056,52.323611,Ganzenhoef (metrostation),N,
-4.988889,52.296111,Gein (metrostation),N,
-4.859167,52.284167,Gondel (sneltramhalte),N,
+4.984444,52.311111,Gaasperplas,N,
+4.973056,52.323611,Ganzenhoef,N,
+4.988889,52.296111,Gein,N,
+4.859167,52.284167,Gondel,N,
 4.883636,52.384999,Haarlemmerplein,N,
 4.833882,52.351472,Heemstedestraat,N,
 4.802321,52.352486,Hoekenes,N,
@@ -138,12 +138,12 @@ LNG,LAT,Name,Sex,Person
 4.783356,52.350322,Inaristraat,N,
 4.787271,52.355631,Ingelandenweg,N,
 4.94766,52.364655,Insulindeweg,N,
-4.850556,52.395278,Isolatorweg (metrostation),N,
+4.850556,52.395278,Isolatorweg,N,
 4.938994,52.363936,Javaplein,N,
 4.810921,52.346341,Kasterleepark,N,
 4.920945,52.376158,Kattenburgerstraat,N,
 4.913026,52.377242,Kop Oostelijke Handelskade,N,
-4.979444,52.316389,Kraaiennest (metrostation),N,
+4.979444,52.316389,Kraaiennest,N,
 4.8705,52.3162,Kronenburg,N,
 4.939841,52.347939,Kruislaan,N,
 4.816862,52.346493,Laan v. Vlaanderen,N,
@@ -151,7 +151,7 @@ LNG,LAT,Name,Sex,Person
 4.896683,52.342987,Maasstraat,N,
 4.896754,52.377928,Martelaarsgracht,N,
 4.774281,52.353952,Matterhorn,N,
-4.856944,52.280833,Meent (sneltramhalte),N,
+4.856944,52.280833,Meent,N,
 4.81039,52.356411,Meer en Vaart,N,
 4.940321,52.3617,Molukkenstraat,N,
 4.932761,52.360593,Muiderpoortstation,N,
@@ -160,80 +160,76 @@ LNG,LAT,Name,Sex,Person
 4.879244,52.381108,Nassaukade,N,
 4.965686,52.337472,Nic. Lublinkstraat,N,
 4.893388,52.376034,Nieuwezijds Kolk,N,
-4.901111,52.371944,Nieuwmarkt (metrostation),N,
-4.932222,52.401667,Noord (metrostation),N,
-4.919167,52.389167,Noorderpark (metrostation),N,
+4.901111,52.371944,Nieuwmarkt,N,
+4.932222,52.401667,Noord,N,
+4.919167,52.389167,Noorderpark,N,
 4.866259,52.346316,Olympiaplein,N,
 4.858536,52.345243,Olympiaweg,N,
 4.87251,52.30806,Onderuit,N,
 4.902277,52.360012,Oosteinde,N,
 4.87163,52.30272,Oranjebaan,N,
 4.803276,52.359347,Osdorpplein,N,
-4.8675,52.296111,Ouderkerkerlaan (sneltramhalte),N,
-4.9175,52.331667,Overamstel (metrostation),N,
+4.8675,52.296111,Ouderkerkerlaan,N,
+4.9175,52.331667,Overamstel,N,
 4.875095,52.363081,Overtoom,N,
 4.856175,52.357885,Overtoomsesluis,N,
 4.917529,52.377015,Passagiers Terminal Amsterdam,N,
 4.776905,52.352892,Pilatus,N,
 4.917089,52.364578,Plantage Badlaan,N,
 4.910872,52.366721,Plantage Kerklaan,N,
-4.844722,52.283056,Poortwachter (sneltramhalte),N,
+4.844722,52.283056,Poortwachter,N,
 4.85324,52.363761,Postjesweg,N,
 4.927393,52.356856,Pretoriusstraat,N,
 4.879854,52.366173,Raamplein,N,
-4.974167,52.295556,Reigersbos (metrostation),N,
+4.974167,52.295556,Reigersbos,N,
 4.934268,52.372943,Rietlandpark,N,
-4.892778,52.371111,Rokin (metrostation),N,
+4.892778,52.371111,Rokin,N,
 4.876,52.3719,Rozengracht,N,
 4.807622,52.35961,Ruimzicht,N,
 4.999695,52.352857,Ruisrietstraat,N,
 4.891215,52.347675,Scheldestraat,N,
 4.958718,52.338736,Schoolstraat,N,
 4.803999,52.344968,Sloten,N,
-4.818917,52.372787,SLOTERMEER,N,
 4.820609,52.375448,Slotermeerlaan,N,
 4.969682,52.33676,Sniep,N,
 4.943798,52.362179,Soembawastraat,N,
 4.887131,52.36094,Spiegelgracht,N,
-4.835278,52.284722,Spinnerij (sneltramhalte),N,
-4.863889,52.290556,Sportlaan (sneltramhalte),N,
+4.835278,52.284722,Spinnerij,N,
+4.863889,52.290556,Sportlaan,N,
 4.889247,52.368688,Spui,N,
 4.879693,52.36321,Stadhouderskade,N,
 4.85758,52.349099,Stadionplein,N,
 4.917778,52.346389,Station Amsterdam Amstel,N,
 4.946111,52.313056,Station Amsterdam Bijlmer ArenA,N,
-4.900556,52.378889,Station Amsterdam Centraal,N,
 4.96,52.298333,Station Amsterdam Holendrecht,N,
 4.833889,52.357222,Station Amsterdam Lelylaan,N,
 4.890556,52.336667,Station Amsterdam RAI,N,
-4.838056,52.389167,Station Amsterdam Sloterdijk,N,
-4.873056,52.338889,Station Amsterdam Zuid,N,
 4.956389,52.330278,Station Diemen Zuid,N,
 4.936389,52.323333,Station Duivendrecht,N,
 4.890354,52.336675,Station RAI,N,
 4.837062,52.388183,Station Sloterdijk,N,
 4.873723,52.339173,Station Zuid/WTC,N,
 4.980436,52.362985,Steigereiland,N,
-4.941389,52.318611,Strandvliet (metrostation),N,
+4.941389,52.318611,Strandvliet,N,
 4.852302,52.358061,Surinameplein,N,
 4.86919,52.32118,Uilenstede,N,
 4.906728,52.342487,Uiterwaardenstraat,N,
-4.93,52.33,Van der Madeweg (metrostation),N,
+4.93,52.33,Van der Madeweg,N,
 4.99144,52.357248,Vennepluimstraat,N,
-4.946389,52.326667,Venserpolder (metrostation),N,
+4.946389,52.326667,Venserpolder,N,
 4.905513,52.345794,Victorieplein,N,
-4.891111,52.360833,Vijzelgracht (metrostation),N,
+4.891111,52.360833,Vijzelgracht,N,
 4.899378,52.346553,Waalstraat,N,
 4.902172,52.367073,Waterlooplein,N,
 4.907404,52.361057,Weesperplein,N,
 4.884198,52.374013,Westermarkt,N,
 4.845525,52.351568,Westlandgracht,N,
-4.830556,52.274444,Westwijk (sneltramhalte),N,
+4.830556,52.274444,Westwijk,N,
 4.890832,52.359817,Weteringcircuit,N,
 4.85085,52.382828,Wiltzanghlaan,N,
-4.932694,52.365813,Zeeburgerdijkdijk,N,
+4.932694,52.365813,Zeeburgerdijk,N,
 4.87234,52.31181,Zonnestein,N,
 4.885334,52.388034,Zoutkeetsgracht,N,
 4.961583,52.371996,Zuiderzeeweg,N,
 4.954558,52.339599,A. Krijtsstraat,O,
-4.861389,52.286944,Marne (sneltramhalte),O,
+4.861389,52.286944,Marne,O,
