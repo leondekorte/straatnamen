@@ -99,7 +99,7 @@
       <input  name="updateButton" 
               class="button"
               type="button" 
-              value="Laat zien" 
+              value="Laat verdeling zien" 
               onclick="updateData(data_2,0)" />
 
       <input  name="updateButton2" 
@@ -198,6 +198,14 @@
             d.LNG = +d.LNG;
             d.LAT = +d.LAT;  
             d.Name = d.Name;
+              
+            if (d.Sex === 'M') {
+              d.fillColor = '#867abd';
+            } else if (d.Sex === 'F') {
+              d.fillColor = '#d2ccff';
+            } else {
+              d.fillColor = 'white';
+            }
             
             total_count += 1;
             margin_between_dots = 15;
@@ -228,15 +236,15 @@
             .enter()
             .append("circle")
 
-            .attr("cy", function(d) { return projection([d.LNG,d.LAT])[1]; } )
+            .attr("cy", function(d) { return projection([d.LNG,d.LAT])[1]; })
             .attr("cx", function(d) { return projection([d.LNG,d.LAT])[0]; })
-            .style("fill", function(d) { return('#867abd'); })
-            .attr("r", function(d) { return 3; })
+            .style("fill", function(d) { return d.fillColor })
+            .attr("r", function(d) { return 3.5; })
             .attr("class", "stop")       
             .on('mouseover', function(d){
 
                 // highlight stop and make bigger
-                var nodeSelection = d3.select(this).transition().style("fill", "white").style("cursor", "pointer").attr("r",7);
+                var nodeSelection = d3.select(this).transition().style("cursor", "pointer").attr("r",8);
                 
                 var data = d;
 
@@ -296,7 +304,7 @@
                     .style("stroke-width", "4");
             })
             .on('mouseleave', function(d){
-                var nodeSelection = d3.select(this).transition().style("fill", "#867abd").attr("r",3)
+                var nodeSelection = d3.select(this).transition().attr("r",3.5)
                 tooltip .selectAll('text').remove();
                 tooltip .selectAll('rect').remove();
 
@@ -321,7 +329,7 @@
                         .text("Vernoemd naar een man (92)").attr("x", 5).attr("y", 110);
 
     svg.append("text").attr("class","dotlabel")
-                        .text("Niet vernoemd naar een persoon (108)").attr("x", 5).attr("y", 214);
+                        .text("Niet vernoemd naar een persoon (136)").attr("x", 5).attr("y", 214);
  
     function updateData(newdata, opacity) {
       
@@ -381,7 +389,7 @@
           .on("mouseover", function (d) {
             
             // highlight stop and make bigger
-            var nodeSelection = d3.select(this).transition().style("fill", "white").style("cursor", "pointer").attr("r",7);
+            var nodeSelection = d3.select(this).transition().style("cursor", "pointer").attr("r",8);
 
             var data_test = d;
 
@@ -428,7 +436,8 @@
                   .style("stroke-width", "4");
           })
           .on("mouseleave", function (d) {
-            var nodeSelection = d3.select(this).transition().style("fill", "#867abd").style("cursor", "pointer").attr("r",3);
+            
+            var nodeSelection = d3.select(this).transition().style("cursor", "pointer").attr("r",3.5);
 
               tooltip.selectAll('text').remove();
               tooltip.selectAll('rect').remove();
